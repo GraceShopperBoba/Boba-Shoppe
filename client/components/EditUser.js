@@ -6,10 +6,10 @@ export class EditUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      username: "",
+      firstName: this.props.user.firstName ? this.props.user.firstName : "",
+      lastName: this.props.user.lastName ? this.props.user.lastName : "",
+      email: this.props.user.email ? this.props.user.email : "",
+      username: this.props.user.username ? this.props.user.username : "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

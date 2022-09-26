@@ -65,8 +65,7 @@ export class Profile extends React.Component {
 
 const mapState = (state) => {
   return {
-    loggedUser: state.auth,
-    user: state.user,
+    user: state.auth,
   };
 };
 
