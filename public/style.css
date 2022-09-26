@@ -1,11 +1,11 @@
 body {
+  margin-top: 5rem;
   font-family: sans-serif;
   background-image: url('/images/background2.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
-
 
 a {
   text-decoration: none;
@@ -18,7 +18,11 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+}
 
+.username {
+	color: white; 
+	margin-top: 10rem;
 }
 
 .NavBar{ 

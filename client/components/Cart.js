@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchOrdersByUser } from "../redux/orders";
 import { deleteOrderProductThunk } from "../redux/orderProducts";
+import { Link } from "react-router-dom";
 
 export class Cart extends React.Component {
   constructor(props) {
@@ -72,7 +73,9 @@ export class Cart extends React.Component {
           <div className="orderSummary">
             <h2>Order Summmary</h2>
             <h3>TOTAL</h3>
-            <button className="checkout">Proceed To Checkout</button>
+            <Link to="/checkout">
+              <button className="checkout">Proceed To Checkout</button>
+            </Link>
           </div>
         </div>
         <div />

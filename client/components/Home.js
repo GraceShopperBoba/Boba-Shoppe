@@ -10,7 +10,7 @@ export const Home = (props) => {
 
   return (
     <div>
-      <h1>{username}</h1>
+      <h1 className="username">Hi, Bobalicious {username}</h1>
       <AllProducts match={props.match} />
     </div>
   );
