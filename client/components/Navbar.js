@@ -19,7 +19,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
           </Link>
           {isAdmin ? (
             <Link to="/users">
-              <img src="/images/userIcon.png" />
+              <img src="/images/groupUsers.png" />
             </Link>
           ) : null}
           <Link to="/cart">

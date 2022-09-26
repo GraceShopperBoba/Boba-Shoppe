@@ -11,7 +11,7 @@ const Order_Products = db.define("order_products", {
   },
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 0,
+    defaultValue: 1,
     validate: {
       min: 0,
     },

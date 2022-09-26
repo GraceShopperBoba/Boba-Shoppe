@@ -7,6 +7,7 @@ const {
 router.get("/", async (req, res, next) => {
   try {
     const orders = await Order_Products.findAll();
+    res.json(orders);
   } catch (err) {
     next(err);
   }
@@ -14,7 +15,6 @@ router.get("/", async (req, res, next) => {
 
 //api/ordersProducts/:orderId"
 router.get("/:orderId/:productId", async (req, res, next) => {
-  console.log("in API");
   try {
     const order = await Order_Products.findAll({
       where: {
@@ -30,16 +30,14 @@ router.get("/:orderId/:productId", async (req, res, next) => {
 
 //api/ordersProducts/
 router.delete("/:orderId/:productId", async (req, res, next) => {
-  console.log("in API");
+  console.log("in API delete");
   try {
-    const order = await Order_Products.findAll({
+    await Order_Products.destroy({
       where: {
         orderId: req.params.orderId,
         productId: req.params.productId,
       },
     });
-    await order.destroy();
-    res.send(order);
   } catch (error) {
     next(error);
   }

@@ -45,7 +45,6 @@ export class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products || [];
-    console.log(products);
     const isAdmin = this.props.isAdmin;
 
     return isAdmin ? (

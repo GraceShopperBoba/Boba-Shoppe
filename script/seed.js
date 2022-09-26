@@ -95,6 +95,33 @@ async function seed() {
       description: "Purple",
       category: "Tea",
     }),
+    Product.create({
+      id: 5,
+      name: "Oolong",
+      quantity: 4,
+      imageUrl: "/images/oolongTea.jpeg",
+      price: 3.19,
+      description: "Milk Tea",
+      category: "Tea",
+    }),
+    Product.create({
+      id: 6,
+      name: "Matcha",
+      quantity: 6,
+      imageUrl: "/images/matcha.jpeg",
+      price: 5.19,
+      description: "Caffine",
+      category: "Tea",
+    }),
+    Product.create({
+      id: 7,
+      name: "Coffee",
+      quantity: 6,
+      imageUrl: "/images/coffee.jpeg",
+      price: 5.19,
+      description: "Caffine",
+      category: "Tea",
+    }),
   ]);
 
   // Creating Orders
