@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchUser } from "../redux/user";
 import EditProfile from "./EditProfile";
+import { EditUser } from "./EditUser";
 
 export class Profile extends React.Component {
   constructor(props) {
@@ -64,7 +65,8 @@ export class Profile extends React.Component {
 
 const mapState = (state) => {
   return {
-    user: state.auth,
+    loggedUser: state.auth,
+    user: state.user,
   };
 };
 

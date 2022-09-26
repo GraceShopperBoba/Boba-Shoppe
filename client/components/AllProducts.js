@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { fetchDeletedProduct, fetchProducts } from "../redux/products";
 import { me } from "../store/auth";
 import CreateProduct from "./CreateProduct";
+import Category from "./Category";
 
 export class AllProducts extends React.Component {
   constructor(props) {
     super(props);
-
     this.addToCart = this.addToCart.bind(this);
     this.confirmation = this.confirmation.bind(this);
   }
@@ -18,8 +18,22 @@ export class AllProducts extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getProducts();
+    console.log("LOG: ", this.props.match.params.category);
+    let category = this.props.match.params.category
+      ? this.props.match.params.category
+      : "";
+    this.props.getProducts(category);
     this.props.currentUserData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.category !== prevProps.match.params.category) {
+      let category = this.props.match.params.category
+        ? this.props.match.params.category
+        : "";
+      this.props.getProducts(category);
+      this.props.currentUserData();
+    }
   }
 
   confirmation(productId) {
@@ -31,10 +45,12 @@ export class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products || [];
+    console.log(products);
     const isAdmin = this.props.isAdmin;
 
     return isAdmin ? (
       <div id="allItems">
+        <Category />
         <div className="itemContainer">
           {products.length
             ? products.map((product) => {
@@ -64,31 +80,34 @@ export class AllProducts extends React.Component {
         </div>
       </div>
     ) : (
-      <div id="allItems">
-        <div className="itemContainer">
-          {products.length
-            ? products.map((product) => {
-                return (
-                  <div id="singleItem" key={product.id}>
-                    <div className="productDisplayCard">
-                      <Link to={`/products/${product.id}`}>
-                        <img src={product.imageUrl} alt="image" />
-                        <h2>{product.name}</h2>
-                        <h3>{product.price}</h3>
-                        <div className="likeArea">
-                          <button className="add" onClick={this.addToCart}>
-                            Add to Cart
-                          </button>
-                          <button className="like">
-                            <span>♥</span>
-                          </button>
-                        </div>
-                      </Link>
+      <div>
+        <Category />
+        <div id="allItems">
+          <div className="itemContainer">
+            {products.length
+              ? products.map((product) => {
+                  return (
+                    <div id="singleItem" key={product.id}>
+                      <div className="productDisplayCard">
+                        <Link to={`/product/${product.id}`}>
+                          <img src={product.imageUrl} alt="image" />
+                          <h2>{product.name}</h2>
+                          <h3>{product.price}</h3>
+                          <div className="likeArea">
+                            <button className="add" onClick={this.addToCart}>
+                              Add to Cart
+                            </button>
+                            <button className="like">
+                              <span>♥</span>
+                            </button>
+                          </div>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            : null}
+                  );
+                })
+              : null}
+          </div>
         </div>
       </div>
     );
@@ -103,7 +122,7 @@ const mapState = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getProducts: () => dispatch(fetchProducts()),
+  getProducts: (category) => dispatch(fetchProducts(category)),
   currentUserData() {
     dispatch(me());
   },

@@ -53,19 +53,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//create a new user NOT SURE IF WE NEED
-// router.post("/", async (req, res, next) => {
-//   try {
-//     res.status(201).send(await User.create(req.body));
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 //get specific user and their products
 router.get("/:username", usersOnly, async (req, res, next) => {
   try {
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: {
         username: req.params.username,
       },
@@ -77,21 +68,13 @@ router.get("/:username", usersOnly, async (req, res, next) => {
   }
 });
 
-//delete a specific user
-router.delete("/:id", async (req, res, next) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
 //edit a user - will be for user to edit their own log in
 router.put("/:username", async (req, res, next) => {
   try {
     const user = await User.findOne({
-      where: { username: req.params.username },
+      where: {
+        username: req.params.username,
+      },
     });
     res.send(await user.update(req.body));
   } catch (error) {

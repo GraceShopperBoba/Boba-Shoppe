@@ -35,7 +35,14 @@ const adminsOnly = (req, res, next) => {
 //api/products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    let products;
+    if (req.query.category == "") {
+      products = await Product.findAll();
+    } else {
+      products = await Product.findAll({
+        where: { category: req.query.category },
+      });
+    }
     res.json(products);
   } catch (err) {
     next(err);

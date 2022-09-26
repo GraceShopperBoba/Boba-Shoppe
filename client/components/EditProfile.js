@@ -15,13 +15,6 @@ export class EditProfile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMount() {
-  //   console.log("EDIT STUDENT: ", this.props);
-  //   //const username = this.props.match.params.username;
-  //   // const username = this.props.match.params.username;
-  //   // this.props.setUser(username);
-  // }
-
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -86,7 +79,7 @@ export class EditProfile extends React.Component {
 
 const mapState = (state) => {
   return {
-    user: state.auth,
+    user: state.user,
   };
 };
 

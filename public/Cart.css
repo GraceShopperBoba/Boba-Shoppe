@@ -47,3 +47,15 @@
 .cart .productsInCart{
     width: 70%;
 }
+
+.cart .remove { 
+    margin-top: 50%;
+    text-decoration: underline;
+}
+
+.cart .remove:hover { 
+    color: red;
+    cursor: pointer;
+    margin-top: 50%;
+    text-decoration: underline;
+}

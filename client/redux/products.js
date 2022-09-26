@@ -28,10 +28,10 @@ const createProduct = (product) => {
 };
 
 // THUNK CREATOR
-export const fetchProducts = () => {
+export const fetchProducts = (category) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/products");
+      const { data } = await axios.get(`/api/products?category=${category}`);
       dispatch(setProducts(data));
     } catch (error) {
       return error;

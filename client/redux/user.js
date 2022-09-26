@@ -24,6 +24,7 @@ export const fetchUser = (username) => {
   return async (dispatch) => {
     try {
       const { data: user } = await axios.get(`/api/users/${username}`);
+      console.log("USER:", user);
       dispatch(setUser(user));
     } catch (error) {
       return error;

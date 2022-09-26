@@ -10,7 +10,7 @@ export class AdminProfileView extends React.Component {
   }
 
   render() {
-    const user = this.props.user[0] || {};
+    const user = this.props.user || {};
 
     return (
       <div className="profileContainer">
@@ -44,6 +44,7 @@ export class AdminProfileView extends React.Component {
 }
 
 const mapState = (state) => {
+  console.log("STATE", state.user);
   return {
     user: state.user,
   };
