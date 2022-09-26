@@ -24,6 +24,7 @@ export class EditProfile extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.editUser({ ...this.props.user, ...this.state });
+    window.location.reload(false);
   }
 
   render() {
