@@ -78,7 +78,7 @@ router.get("/:username", usersOnly, async (req, res, next) => {
 });
 
 //delete a specific user
-router.delete("/:userId", usersOnly, adminsOnly, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     res.json(user);

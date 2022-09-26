@@ -3,20 +3,30 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchDeletedProduct, fetchProducts } from "../redux/products";
 import { me } from "../store/auth";
+import CreateProduct from "./CreateProduct";
 
 export class AllProducts extends React.Component {
   constructor(props) {
     super(props);
 
     this.addToCart = this.addToCart.bind(this);
+    this.confirmation = this.confirmation.bind(this);
   }
 
   addToCart() {
     console.log("hi");
   }
+
   componentDidMount() {
     this.props.getProducts();
     this.props.currentUserData();
+  }
+
+  confirmation(productId) {
+    const result = confirm("Are you sure you want to delete this product?");
+    if (result) {
+      this.props.deleteProduct(productId);
+    }
   }
 
   render() {
@@ -38,7 +48,9 @@ export class AllProducts extends React.Component {
                         <button>Edit</button>
                       </Link>
                       <button
-                        onClick={() => this.props.deleteProduct(product.id)}
+                        onClick={() => {
+                          this.confirmation(product.id);
+                        }}
                         type="submit"
                       >
                         Delete
@@ -48,6 +60,7 @@ export class AllProducts extends React.Component {
                 );
               })
             : null}
+          <CreateProduct />
         </div>
       </div>
     ) : (

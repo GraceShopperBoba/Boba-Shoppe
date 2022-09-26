@@ -7,11 +7,19 @@ import { me } from "../store/auth";
 export class AllUsers extends React.Component {
   constructor(props) {
     super(props);
+    this.confirmation = this.confirmation.bind(this);
   }
 
   componentDidMount() {
     this.props.getUsers();
     this.props.currentUserData();
+  }
+
+  confirmation(userId) {
+    const result = confirm("Are you sure you want to delete this user?");
+    if (result) {
+      this.props.deleteUser(userId);
+    }
   }
 
   render() {
@@ -20,26 +28,18 @@ export class AllUsers extends React.Component {
     return isAdmin ? (
       <div id="allUsers">
         <h2>All Users:</h2>
-        <div id="itemContainer">
+        <div className="itemContainer">
           {users.map((user) => {
             return (
               <div id="singleItem" key={user.id}>
                 <div className="productDisplayCard">
+                  <img src="/images/profile.jpg" alt="image" />
                   <h2>{user.username}</h2>
-                  <img src={user.imageUrl} alt="image" />
                   <Link to={`/users/${user.username}`}>
-                    <button
-                      type="submit"
-                      // onClick={
-                      //   () => <Profile user={user} /> /*{
-                      //   this.props.setUser(user.username);*/
-                      // }
-                    >
-                      Profile
-                    </button>
+                    <button type="submit">Profile</button>
                   </Link>
                   <button
-                    onClick={() => this.props.deleteUser(user.id)}
+                    onClick={() => this.confirmation(user.id)}
                     type="submit"
                   >
                     Delete
