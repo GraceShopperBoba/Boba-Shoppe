@@ -25,31 +25,17 @@ export class Profile extends React.Component {
           <h1>{user.firstName}'s Account</h1>
           <hr align="left" width="80%" color="black"></hr>
           <div className="tab">
-            <div>
-              <button type="submit">Account Information</button>
-            </div>
-            <div>
-              <button>My Orders</button>
-            </div>
-            <div>
-              <button>My Wishlist</button>
-            </div>
-            <div>
-              <button>Password Reset</button>
-            </div>
-            <div>
-              <button>Address & Payments</button>
-            </div>
+            <h3>
+              Name: {user.firstName} {user.lastName}
+            </h3>
+            <h3>Email: {user.email}</h3>
+            <h3>Username: {user.username}</h3>
           </div>
         </div>
         <div className="rightDiv">
           <div>
             <h1>Account Information</h1>
-            <h3>
-              name: {user.firstName} {user.lastName}
-            </h3>
-            <h3>Email: {user.email}</h3>
-            <h3>username: {user.username}</h3>
+
             <EditProfile />
           </div>
 

@@ -36,7 +36,7 @@ export class AllUsers extends React.Component {
                 <div className="productDisplayCard">
                   <img src="/images/profile.jpg" alt="image" />
                   <h2>{user.username}</h2>
-                  <Link to={`/users/${user.username}`}>
+                  <Link to={`/users/${user.username}`} match={this.props.match}>
                     <button type="submit">Profile</button>
                   </Link>
                   <button

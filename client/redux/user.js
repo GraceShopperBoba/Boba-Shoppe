@@ -1,8 +1,10 @@
 import axios from "axios";
+import { bindActionCreators } from "redux";
 
 // ACTION TYPE
 const SET_USER = "SET_USER";
 const EDIT_USER = "EDIT_USER";
+const CLEAR_USER = "CLEAR_USER";
 
 // ACTION CREATOR
 const setUser = (user) => {
@@ -19,12 +21,17 @@ const editUser = (user) => {
   };
 };
 
+const clearUser = (user) => {
+  return {
+    type: CLEAR_USER,
+    user,
+  };
+};
 // THUNK CREATOR
 export const fetchUser = (username) => {
   return async (dispatch) => {
     try {
       const { data: user } = await axios.get(`/api/users/${username}`);
-      console.log("USER:", user);
       dispatch(setUser(user));
     } catch (error) {
       return error;
@@ -44,12 +51,25 @@ export const fetchEditedUser = (user, history) => {
   };
 };
 
+export const fetchClearedUser = (username) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/users/${username}`);
+      dispatch(clearUser(data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
 // REDUCER
 export default function userReducer(state = {}, action) {
   switch (action.type) {
     case SET_USER:
       return action.user;
     case EDIT_USER:
+      return action.user;
+    case CLEAR_USER:
       return action.user;
     default:
       return state;

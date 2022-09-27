@@ -25,15 +25,40 @@ router.post("/", async (req, res, next) => {
 });
 
 //returns orders for a single user and that are not fulfilled
-router.get("/user/:userId", async (req, res, next) => {
+// router.get("/user/:userId", async (req, res, next) => {
+//   try {
+//     const order = await Order.findOne({
+//       where: {
+//         userId: req.params.userId,
+//         isFulfilled: false,
+//       },
+//       include: [Product],
+//     });
+//     res.json(order);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+//for order history in profiles
+router.get("/user/:username", async (req, res, next) => {
   try {
+    console.log("Username:", req.params.username);
+    const user = await User.findOne({
+      where: {
+        username: req.params.username,
+      },
+    });
+    console.log("User:", user);
+
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: user.id,
         isFulfilled: false,
       },
       include: [Product],
     });
+    console.log("ORDER: ", order);
     res.json(order);
   } catch (err) {
     next(err);

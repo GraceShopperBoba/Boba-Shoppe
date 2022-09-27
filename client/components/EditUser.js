@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchEditedUser, fetchUser } from "../redux/user";
+import { fetchEditedUser, fetchUser, fetchClearedUser } from "../redux/user";
 
 export class EditUser extends React.Component {
   constructor(props) {
@@ -15,6 +15,11 @@ export class EditUser extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.setUser(this.props.match.params.username);
+    console.log("DID MOUNT: ", this.state);
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -27,9 +32,14 @@ export class EditUser extends React.Component {
     window.location.reload(false);
   }
 
+  componentWillUnmount() {
+    this.props.clearUser();
+  }
+
   render() {
     const { firstName, lastName, email, username } = this.state;
     const { handleChange, handleSubmit } = this;
+
     return (
       <div>
         <form className="edit-form" onSubmit={handleSubmit}>
@@ -88,6 +98,7 @@ const mapDispatch = (dispatch, { history }) => {
   return {
     editUser: (user) => dispatch(fetchEditedUser(user, history)),
     setUser: (username) => dispatch(fetchUser(username)),
+    clearUser: () => dispatch(fetchClearedUser({})),
   };
 };
 

@@ -1,16 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchUser } from "../redux/user";
+import { fetchOrdersByUser } from "../redux/orders";
 import EditUser from "./EditUser";
 
 export class AdminProfileView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: "",
+    };
+  }
+
   componentDidMount() {
     const username = this.props.match.params.username;
     this.props.setUser(username);
+    this.props.getOrders(username);
+    console.log("GET ORDERS: ", this.props.orders);
+    console.log("USERID: ", this.props.match.params);
+  }
+
+  componentDidCatch(event) {
+    event.preventDefault();
   }
 
   render() {
     const user = this.props.user || {};
+    let { orders } = this.props || [];
+    let products = orders.products || [];
+
+    console.log("ORDERS: ", orders);
+    console.log("PRODICTS: ", products);
 
     return (
       <div className="profileContainer">
@@ -18,25 +38,31 @@ export class AdminProfileView extends React.Component {
           <h1>{user.firstName}'s Account</h1>
           <hr align="left" width="80%" color="black"></hr>
           <div className="tab">
-            <br />
-            <button>Account Information</button>
-            <button>Order History</button>
-          </div>
-        </div>
-        <div className="rightDiv">
-          <div>
-            <h1>Account Information</h1>
             <h3>
               name: {user.firstName} {user.lastName}
             </h3>
             <h3>Email: {user.email}</h3>
             <h3>username: {user.username}</h3>
-            <EditUser />
-          </div>
-          <div>
             <img src={user.imageUrl} alt="image" />
-            <button>Edit Profile Pic</button>
           </div>
+        </div>
+        <div className="rightDiv">
+          <div>
+            <h1>Account Information</h1>
+            <EditUser match={this.props.match} user={user} />
+            <div>
+              <h1>Header</h1>
+              {products.map((product) => {
+                return (
+                  <div>
+                    <h1>{product.name}</h1>
+                    <p> {product.isfullfilled}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="order-history"></div>
         </div>
       </div>
     );
@@ -44,15 +70,18 @@ export class AdminProfileView extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("STATE", state.user);
+  console.log("STATE", state.user.id);
   return {
     user: state.user,
+    orders: state.orders,
+    userId: state.user.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (userId) => dispatch(fetchUser(userId)),
+    getOrders: (userId) => dispatch(fetchOrdersByUser(userId)),
   };
 };
 

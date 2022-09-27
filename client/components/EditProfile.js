@@ -1,18 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchEditedUser, fetchUser } from "../redux/user";
+import { fetchEditedUser, fetchUser, fetchClearedUser } from "../redux/user";
 
 export class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      username: "",
+      firstName: this.props.user.firstName ? this.props.user.firstName : "",
+      lastName: this.props.user.lastName ? this.props.user.lastName : "",
+      email: this.props.user.email ? this.props.user.email : "",
+      username: this.props.user.username ? this.props.user.username : "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.setUser(this.props.user.username);
   }
 
   handleChange(event) {
@@ -25,6 +29,10 @@ export class EditProfile extends React.Component {
     event.preventDefault();
     this.props.editUser({ ...this.props.user, ...this.state });
     window.location.reload(false);
+  }
+
+  componentWillUnmount() {
+    this.props.clearUser();
   }
 
   render() {
@@ -88,6 +96,7 @@ const mapDispatch = (dispatch, { history }) => {
   return {
     editUser: (user) => dispatch(fetchEditedUser(user, history)),
     setUser: (username) => dispatch(fetchUser(username)),
+    clearUser: () => dispatch(fetchClearedUser({})),
   };
 };
 
