@@ -50,19 +50,19 @@ export class AdminProfileView extends React.Component {
           <div>
             <h1>Account Information</h1>
             <EditUser match={this.props.match} user={user} />
-            <div>
-              <h1>Header</h1>
-              {products.map((product) => {
-                return (
-                  <div>
-                    <h1>{product.name}</h1>
-                    <p> {product.isfullfilled}</p>
-                  </div>
-                );
-              })}
-            </div>
+            <div></div>
           </div>
-          <div className="order-history"></div>
+          <div className="order-history">
+            <h2>Order History</h2>
+            {products.map((product) => {
+              return (
+                <div>
+                  <h1>{product.name}</h1>
+                  <p> {product.isfullfilled}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
