@@ -113,8 +113,7 @@ export function Cart(props) {
             <button className="checkout">Proceed To Checkout</button>
           </Link>
         </div>
-      </div>
-    </div>
+        </div>
   );
 }
 
