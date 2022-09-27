@@ -43,7 +43,6 @@ router.get("/user/:userId", async (req, res, next) => {
 //for order history in profiles
 router.get("/username/:username", async (req, res, next) => {
   try {
-    console.log("Username:", req.params.username);
     const user = await User.findOne({
       where: {
         username: req.params.username,
