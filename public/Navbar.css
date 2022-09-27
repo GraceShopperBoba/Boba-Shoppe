@@ -1,0 +1,13 @@
+.navbar {
+    background-color: #CDDAFD;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 8%;
+    /* position: relative; */
+    background: linear-gradient(90deg, #CDDAFD, #9F86C0);
+    margin-bottom: 20%;
+}
+
+
