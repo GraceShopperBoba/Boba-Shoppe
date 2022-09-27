@@ -17,7 +17,7 @@ export class AdminProfileView extends React.Component {
     this.props.setUser(username);
     this.props.getOrders(username);
     console.log("GET ORDERS: ", this.props.orders);
-    console.log("USERID: ", this.props.match.params);
+    console.log("USERID: ", this.props);
   }
 
   componentDidCatch(event) {
@@ -70,11 +70,11 @@ export class AdminProfileView extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("STATE", state.user.id);
+  //console.log("STATE", state.user.id);
   return {
     user: state.user,
     orders: state.orders,
-    userId: state.user.id,
+    //userId: state.user.id,
   };
 };
 

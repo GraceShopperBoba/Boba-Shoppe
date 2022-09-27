@@ -8,7 +8,22 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="NavBar">
     <h1>Boba Shoppe</h1>
     <nav className="AlignRight">
-      {isLoggedIn ? (
+      {isAdmin ? (
+        <div>
+          <Link to="/home">
+            <img src="/images/homeIcon.png" />
+          </Link>
+          <Link to="/profile">
+            <img src="/images/userIcon.png" />
+          </Link>
+          <Link to="/users">
+            <img src="/images/groupUsers.png" />
+          </Link>
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
+        </div>
+      ) : isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">
@@ -17,11 +32,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
           <Link to="/profile">
             <img src="/images/userIcon.png" />
           </Link>
-          {isAdmin ? (
-            <Link to="/users">
-              <img src="/images/groupUsers.png" />
-            </Link>
-          ) : null}
+
           <Link to="/cart">
             <img src="/images/cartIcon.png" />
           </Link>

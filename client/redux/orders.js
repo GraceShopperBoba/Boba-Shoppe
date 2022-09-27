@@ -23,7 +23,7 @@ export const setOrder = (order) => {
 export const fetchOrdersByUser = (userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/orders/user/${userId}`);
+      const { data } = await axios.get(`/api/orders/username/${userId}`);
       dispatch(setOrders(data));
     } catch (error) {
       console.log(error);

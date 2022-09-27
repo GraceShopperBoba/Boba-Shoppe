@@ -6,10 +6,10 @@ export class EditUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: this.props.user.firstName ? this.props.user.firstName : "",
-      lastName: this.props.user.lastName ? this.props.user.lastName : "",
-      email: this.props.user.email ? this.props.user.email : "",
-      username: this.props.user.username ? this.props.user.username : "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      username: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,9 +32,9 @@ export class EditUser extends React.Component {
     window.location.reload(false);
   }
 
-  componentWillUnmount() {
-    this.props.clearUser();
-  }
+  // componentWillUnmount() {
+  //   this.props.clearUser();
+  // }
 
   render() {
     const { firstName, lastName, email, username } = this.state;
@@ -98,7 +98,7 @@ const mapDispatch = (dispatch, { history }) => {
   return {
     editUser: (user) => dispatch(fetchEditedUser(user, history)),
     setUser: (username) => dispatch(fetchUser(username)),
-    clearUser: () => dispatch(fetchClearedUser({})),
+    //clearUser: () => dispatch(fetchClearedUser({})),
   };
 };
 
