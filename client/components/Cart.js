@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchOrdersByUser } from "../redux/orders";
-import { deleteOrderProductThunk } from "../redux/orderProducts";
+import {
+  deleteOrderProductThunk,
+  getOrderProductThunk,
+  updateOrderProductThunk,
+} from "../redux/orderProducts";
 import { Link } from "react-router-dom";
 
 export class Cart extends React.Component {
@@ -17,7 +21,12 @@ export class Cart extends React.Component {
     let { orders } = this.props || [];
     let products = orders?.products || [];
     let { user } = this.props;
+    let overallTotal = 0;
+    products.map((product) => {
+      overallTotal += product.order_products.quantity * product.price;
+    });
 
+    // console.log("user", user);
     return (
       <div className="cart">
         <h1>{user.firstName}'s Shopping Bag</h1>
@@ -34,29 +43,59 @@ export class Cart extends React.Component {
                           <h2> {product.name}</h2>
                         </div>
                         <div className="price">
-                          <h3>Item Price: {product.price}</h3>
+                          <h3>Item Price: ${product.price / 100}</h3>
                         </div>
-                        <select name="quantity" className="quantSelector">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-                        </select>
+                        <div className="quantity">
+                          <button
+                            onClick={() => {
+                              let quantity =
+                                (product.order_products.quantity -= 1);
+                              let orderId = orders.id;
+                              let productId = product.id;
+                              this.props.updateOrdersProduct({
+                                quantity,
+                                orderId,
+                                productId,
+                              });
+                              window.location.reload(false);
+                            }}
+                          >
+                            -
+                          </button>
+                          <h3>Quantity: {product.order_products.quantity}</h3>
+
+                          <button
+                            onClick={() => {
+                              let quantity =
+                                (product.order_products.quantity += 1);
+                              let orderId = orders.id;
+                              let productId = product.id;
+                              this.props.updateOrdersProduct({
+                                quantity,
+                                orderId,
+                                productId,
+                              });
+                              window.location.reload(true);
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
                         <div className="price">
-                          <h3>Total Price: {product.price}</h3>
+                          <h3>
+                            Total Price: $
+                            {(product.price * product.order_products.quantity) /
+                              100}
+                          </h3>
                           <h5
                             className="remove"
                             onClick={() => {
-                              let thunkInfo = [];
-                              thunkInfo.push(orders.id);
-                              thunkInfo.push(product.id);
-                              this.props.deleteOrderProduct(thunkInfo);
+                              let orderId = orders.id;
+                              let productId = product.id;
+                              this.props.deleteOrderProduct({
+                                orderId,
+                                productId,
+                              });
                               window.location.reload(false);
                             }}
                           >
@@ -72,7 +111,8 @@ export class Cart extends React.Component {
           </div>
           <div className="orderSummary">
             <h2>Order Summmary</h2>
-            <h3>TOTAL</h3>
+            <h3>TOTAL: ${(overallTotal / 100).toFixed(2)} </h3>
+            {("in total", console.log(this))}
             <Link to="/checkout">
               <button className="checkout">Proceed To Checkout</button>
             </Link>
@@ -96,6 +136,8 @@ const mapDispatchToProps = (dispatch) => {
     getOrders: (userId) => dispatch(fetchOrdersByUser(userId)),
     deleteOrderProduct: (thunkInfo) =>
       dispatch(deleteOrderProductThunk(thunkInfo)),
+    getOrdersProduct: (order) => dispatch(getOrderProductThunk(order)),
+    updateOrdersProduct: (order) => dispatch(updateOrderProductThunk(order)),
   };
 };
 

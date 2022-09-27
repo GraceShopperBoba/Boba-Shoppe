@@ -37,6 +37,9 @@ const User = db.define("user", {
   password: {
     type: Sequelize.STRING,
   },
+  currentOrder: {
+    type: Sequelize.INTEGER,
+  },
 });
 
 module.exports = User;

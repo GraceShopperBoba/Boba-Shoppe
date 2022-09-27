@@ -25,6 +25,17 @@
 
 }
 
+.cart .quantity{ 
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.quantity button{
+    height: 2rem;
+    margin: 1rem;
+ }
+
 .cart img {
    border-radius: 0px;
 }

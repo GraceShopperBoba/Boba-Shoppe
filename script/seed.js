@@ -24,6 +24,7 @@ async function seed() {
       adminAccess: false,
       username: "Abby",
       password: "123",
+      currentOrder: 1,
     }),
     User.create({
       id: 2,
@@ -34,6 +35,7 @@ async function seed() {
       adminAccess: true,
       username: "Bea",
       password: "123",
+      currentOrder: 2,
     }),
     User.create({
       id: 3,
@@ -44,6 +46,7 @@ async function seed() {
       adminAccess: false,
       username: "Zach",
       password: "123",
+      currentOrder: 3,
     }),
     User.create({
       id: 4,
@@ -54,6 +57,7 @@ async function seed() {
       adminAccess: false,
       username: "Eric",
       password: "123",
+      currentOrder: 4,
     }),
   ]);
 
@@ -64,7 +68,7 @@ async function seed() {
       name: "Strawberry",
       quantity: 10,
       imageUrl: "/images/StrawberryTea.jpg",
-      price: 5.45,
+      price: 545,
       description: "yummy",
       category: "Fruit",
     }),
@@ -73,7 +77,7 @@ async function seed() {
       name: "Mango",
       quantity: 7,
       imageUrl: "/images/Mango.jpg",
-      price: 6.95,
+      price: 695,
       description: "delicious",
       category: "Fruit",
     }),
@@ -82,7 +86,7 @@ async function seed() {
       name: "Brown Sugar",
       quantity: 7,
       imageUrl: "/images/brownsugar.jpg",
-      price: 6.25,
+      price: 625,
       description: "Oooooh lala",
       category: "Sweet",
     }),
@@ -91,7 +95,7 @@ async function seed() {
       name: "Taro",
       quantity: 3,
       imageUrl: "/images/Taro.jpg",
-      price: 3.99,
+      price: 399,
       description: "Purple",
       category: "Tea",
     }),
@@ -100,7 +104,7 @@ async function seed() {
       name: "Oolong",
       quantity: 4,
       imageUrl: "/images/oolongTea.jpeg",
-      price: 3.19,
+      price: 319,
       description: "Milk Tea",
       category: "Tea",
     }),
@@ -109,7 +113,7 @@ async function seed() {
       name: "Matcha",
       quantity: 6,
       imageUrl: "/images/matcha.jpeg",
-      price: 5.19,
+      price: 519,
       description: "Caffine",
       category: "Tea",
     }),
@@ -118,64 +122,114 @@ async function seed() {
       name: "Coffee",
       quantity: 6,
       imageUrl: "/images/coffee.jpeg",
-      price: 5.19,
+      price: 519,
       description: "Caffine",
+      category: "Sweet",
+    }),
+    Product.create({
+      id: 8,
+      name: "Lychee",
+      quantity: 9,
+      imageUrl: "/images/lychee.png",
+      price: 519,
+      description: "",
+      category: "Fruit",
+    }),
+    Product.create({
+      id: 9,
+      name: "Sweet Potato",
+      quantity: 2,
+      imageUrl: "/images/sweetPotato.png",
+      price: 579,
+      description: "",
+      category: "Sweet",
+    }),
+    Product.create({
+      id: 10,
+      name: "Coconut Butterfly Pea Flower Boba Tea",
+      quantity: 8,
+      imageUrl: "/images/butterflyPea.png",
+      price: 599,
+      description: "",
+      category: "Sweet",
+    }),
+    Product.create({
+      id: 11,
+      name: "Ube Matcha",
+      quantity: 8,
+      imageUrl: "/images/ube.png",
+      price: 699,
+      description: "",
       category: "Tea",
+    }),
+    Product.create({
+      id: 12,
+      name: "Cherry Blossom ",
+      quantity: 5,
+      imageUrl: "/images/cherry.png",
+      price: 699,
+      description: "",
+      category: "Fruit",
     }),
   ]);
 
   // Creating Orders
   const orders = await Promise.all([
     Order.create({
+      id: 1,
       isFulfilled: false,
+      userId: 1,
     }),
     Order.create({
+      id: 2,
+      isFulfilled: false,
+      userId: 2,
+    }),
+    Order.create({
+      id: 3,
+      isFulfilled: false,
+      userId: 3,
+    }),
+    Order.create({
+      id: 4,
       isFulfilled: true,
-    }),
-    Order.create({
-      isFulfilled: false,
-    }),
-    Order.create({
-      isFulfilled: true,
-    }),
-    Order.create({
-      isFulfilled: false,
+      userId: 4,
     }),
   ]);
 
   //assingning a user to order using magic method
-  await orders[0].setUser(users[1]);
-  await orders[1].setUser(users[2]);
-  await orders[2].setUser(users[2]);
+  // await orders[0].setUser(users[1]);
+  // await orders[1].setUser(users[2]);
+  // await orders[2].setUser(users[2]);
 
-  //adding a user to a product belonggs to many
-  await orders[0].addProduct(products[0], { through: "Order_Products" });
-  await orders[0].addProduct(products[1], { through: "Order_Products" });
+  // //adding a user to a product belonggs to many
+  // await orders[0].addProduct(products[0], { through: "Order_Products" });
+  // await orders[0].addProduct(products[1], { through: "Order_Products" });
 
-  await orders[1].addProduct(products[2], { through: "Order_Products" });
-  await orders[1].addProduct(products[3], { through: "Order_Products" });
+  // await orders[1].addProduct(products[2], { through: "Order_Products" });
+  // await orders[1].addProduct(products[3], { through: "Order_Products" });
 
-  await orders[2].addProduct(products[1], { through: "Order_Products" });
-  await orders[2].addProduct(products[3], { through: "Order_Products" });
+  // await orders[2].addProduct(products[1], { through: "Order_Products" });
+  // await orders[2].addProduct(products[3], { through: "Order_Products" });
 
   console.log(
     `seeded ${users.length} users && ${products.length} products && ${orders.length} orders`
   );
   console.log(`seeded successfully`);
-  return {
-    users: {
-      abby: users[0],
-      bea: users[1],
-      zach: users[2],
-      eric: users[3],
-    },
-    products: {
-      strawberry: products[0],
-      mango: products[1],
-      chocolate: products[2],
-      matcha: products[3],
-    },
-  };
+  // return {
+  //   users: {
+  //     abby: users[0],
+  //     bea: users[1],
+  //     zach: users[2],
+  //     eric: users[3],
+  //   },
+  //   products: {
+  //     strawberry: products[0],
+  //     mango: products[1],
+  //     chocolate: products[2],
+  //     matcha: products[3],
+  //   },
+  // };
 }
 
 /*

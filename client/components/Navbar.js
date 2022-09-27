@@ -5,17 +5,17 @@ import { logout } from "../store";
 import { me } from "../store/auth";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
-  <div className="navbar-container">
-    <nav className="navbar">
-      Boba Shoppe
+  <div className="NavBar">
+    <h1>Boba Shoppe</h1>
+    <nav className="AlignRight">
       {isLoggedIn ? (
-        <div className="link-container">
+        <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">
-            <img className="nav-icons" src="/images/homeIcon.png" />
+            <img src="/images/homeIcon.png" />
           </Link>
           <Link to="/profile">
-            <img className="nav-icons" src="/images/userIcon.png" />
+            <img src="/images/userIcon.png" />
           </Link>
           {isAdmin ? (
             <Link to="/users">
@@ -23,28 +23,24 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
             </Link>
           ) : null}
           <Link to="/cart">
-            <img className="nav-icons" src="/images/cartIcon.png" />
+            <img src="/images/cartIcon.png" />
           </Link>
-          <div className="logout-container">
-            <a href="#" onClick={handleClick} className="logout-button">
-              Logout
-            </a>
-          </div>
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
         </div>
       ) : (
-        <div className="navbar-container">
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/home">
-              <img className="nav-icons" src="/images/homeIcon.png" />
-            </Link>
-            <Link to="/cart">
-              <img className="nav-icons" src="/images/cartIcon.png" />
-            </Link>
-            <Link to="/login">
-              <img className="nav-icons" src="/images/userIcon.png" />
-            </Link>
-          </div>
+        <div>
+          {/* The navbar will show these links before you log in */}
+          <Link to="/home">
+            <img src="/images/homeIcon.png" />
+          </Link>
+          <Link to="/cart">
+            <img src="/images/cartIcon.png" />
+          </Link>
+          <Link to="/login">
+            <img src="/images/userIcon.png" />
+          </Link>
         </div>
       )}
     </nav>

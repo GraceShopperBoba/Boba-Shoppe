@@ -27,6 +27,7 @@ nav a {
 
 .NavBar{ 
 	display: flex;
+	background-color: blueviolet;
 }
 
 .NavBar h1{ 
