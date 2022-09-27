@@ -3,24 +3,24 @@ const {
   models: { Product },
 } = require("../db");
 
-const requireToken = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization;
-    const user = await User.findByToken(token);
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
+// const requireToken = async (req, res, next) => {
+//   try {
+//     const token = req.headers.authorization;
+//     const user = await User.findByToken(token);
+//     req.user = user;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
-const adminsOnly = (req, res, next) => {
-  if (!req.user.adminAccess) {
-    return res.status(403).send("This requires ADMIN access");
-  } else {
-    next();
-  }
-};
+// const adminsOnly = (req, res, next) => {
+//   if (!req.user.adminAccess) {
+//     return res.status(403).send("This requires ADMIN access");
+//   } else {
+//     next();
+//   }
+// };
 
 //api/products
 router.get("/", async (req, res, next) => {
@@ -40,7 +40,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //post a product - users only
-router.post("/", requireToken, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     res.status(201).send(await Product.create(req.body));
   } catch (error) {
@@ -59,7 +59,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //delete a specific product - admins only
-router.delete("/:id", requireToken, adminsOnly, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     await product.destroy();
@@ -70,7 +70,7 @@ router.delete("/:id", requireToken, adminsOnly, async (req, res, next) => {
 });
 
 //edit a product - will be for admins
-router.put("/:id", requireToken, adminsOnly, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     res.send(await product.update(req.body));

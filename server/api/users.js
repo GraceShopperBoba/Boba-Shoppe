@@ -8,24 +8,24 @@ const {
 
 module.exports = router;
 
-const requireToken = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization;
-    const user = await User.findByToken(token);
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
+// const requireToken = async (req, res, next) => {
+//   try {
+//     const token = req.headers.authorization;
+//     const user = await User.findByToken(token);
+//     req.user = user;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
-const adminsOnly = (req, res, next) => {
-  if (!req.user.adminAccess) {
-    return res.status(403).send("This action requires ADMIN access");
-  } else {
-    next();
-  }
-};
+// const adminsOnly = (req, res, next) => {
+//   if (!req.user.adminAccess) {
+//     return res.status(403).send("This action requires ADMIN access");
+//   } else {
+//     next();
+//   }
+// };
 
 //api/users
 router.get("/", async (req, res, next) => {
@@ -53,7 +53,7 @@ router.get("/", async (req, res, next) => {
 // });
 
 //get specific user and their products
-router.get("/:username", requireToken, async (req, res, next) => {
+router.get("/:username", async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
@@ -68,7 +68,7 @@ router.get("/:username", requireToken, async (req, res, next) => {
 });
 
 //edit a user - will be for user to edit their own log in
-router.put("/:username", requireToken, async (req, res, next) => {
+router.put("/:username", async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: { username: req.params.username },
@@ -80,7 +80,7 @@ router.put("/:username", requireToken, async (req, res, next) => {
 });
 
 //delete a specific user
-router.delete("/:id", adminsOnly, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     await user.destroy();
