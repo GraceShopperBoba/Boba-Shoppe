@@ -25,6 +25,17 @@ nav a {
 	margin-top: 10rem;
 }
 
+<<<<<<< HEAD
+=======
+.NavBar{ 
+	display: flex;
+	background-color: blueviolet;
+}
+
+.NavBar h1{ 
+ width:30%
+}
+>>>>>>> main
 .authPage{
 	background: linear-gradient( #5E548E, #231942);
 	padding: 2%;

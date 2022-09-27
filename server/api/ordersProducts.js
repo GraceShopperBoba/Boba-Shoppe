@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const e = require("express");
 const {
   models: { Order_Products },
 } = require("../db");
@@ -13,22 +14,15 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//api/ordersProducts/:orderId"
-router.get("/:orderId/:productId", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const order = await Order_Products.findAll({
-      where: {
-        orderId: req.params.orderId,
-        productId: req.params.productId,
-      },
-    });
-    res.json(order);
+    res.status(201).send(await Order_Products.create(req.body));
   } catch (error) {
     next(error);
   }
 });
 
-//api/ordersProducts/
+//api/ordersProducts
 router.delete("/:orderId/:productId", async (req, res, next) => {
   console.log("in API delete");
   try {
@@ -38,6 +32,36 @@ router.delete("/:orderId/:productId", async (req, res, next) => {
         productId: req.params.productId,
       },
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+//api/ordersProducts
+router.put("/:orderId/:productId", async (req, res, next) => {
+  try {
+    const order = await Order_Products.findOne({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId,
+      },
+    });
+    res.send(await order.update(req.body));
+  } catch (err) {
+    next(err);
+  }
+});
+
+//api/ordersProducts/:orderId"
+router.get("/:orderId/:productId", async (req, res, next) => {
+  try {
+    const order = await Order_Products.findOne({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId,
+      },
+    });
+    res.json(order);
   } catch (error) {
     next(error);
   }
