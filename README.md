@@ -1,5 +1,7 @@
 # Establishing Norms:
 
+Testing
+
 ## Each group should discuss and provide an answer for the following questions
 
 ### What does this group do when two or more members disagree (ex. on a technical approach, a technology choice, etc)?
@@ -37,4 +39,4 @@
 ### What time does this group have daily stand up?
 
 - 10:45AM
->>>>>>> 5af6f2c47d051c8916c682799000a0e1d9670456
+  > > > > > > > 5af6f2c47d051c8916c682799000a0e1d9670456
