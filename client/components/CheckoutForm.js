@@ -101,6 +101,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
+  const [isFulfilled, setIsFulfilled] = useState(false);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -145,6 +146,7 @@ const CheckoutForm = () => {
     setError(null);
     setProcessing(false);
     setPaymentMethod(null);
+    setIsFulfilled(true);
     setBillingDetails({
       email: "",
       phone: "",

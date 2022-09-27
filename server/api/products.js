@@ -3,32 +3,22 @@ const {
   models: { Product },
 } = require("../db");
 
-const usersOnly = (req, res, next) => {
-  if (!req.user) {
-    const err = new Error("Action not allowed while logged out");
-    err.status = 401;
-    return next(err);
-  } else {
+const requireToken = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const user = await User.findByToken(token);
+    req.user = user;
     next();
+  } catch (error) {
+    next(error);
   }
 };
 
 const adminsOnly = (req, res, next) => {
-  let { id, firstName, lastName, email, password, image, adminAccess } =
-    req.user.dataValues;
-
-  if (id && firstName && lastName && email && password && image) {
-    if (!adminAccess) {
-      const err = new Error("This action requires Admin access!");
-      err.status = 401;
-      return next(err);
-    } else {
-      next();
-    }
+  if (!req.user.adminAccess) {
+    return res.status(403).send("This requires ADMIN access");
   } else {
-    const err = new Error("This action requires Admin access!");
-    err.status = 401;
-    return next(err);
+    next();
   }
 };
 
@@ -50,7 +40,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //post a product - users only
-router.post("/", usersOnly, async (req, res, next) => {
+router.post("/", requireToken, async (req, res, next) => {
   try {
     res.status(201).send(await Product.create(req.body));
   } catch (error) {
@@ -69,7 +59,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //delete a specific product - admins only
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, adminsOnly, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     await product.destroy();
@@ -80,7 +70,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //edit a product - will be for admins
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", requireToken, adminsOnly, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     res.send(await product.update(req.body));

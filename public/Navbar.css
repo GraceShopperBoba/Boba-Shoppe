@@ -1,3 +1,8 @@
+/* .navbar-container {
+    display: flex; 
+    flex-flow: row nowrap;
+} */
+
 .navbar {
     background-color: #CDDAFD;
     position: fixed;
@@ -10,4 +15,18 @@
     margin-bottom: 20%;
 }
 
+.link-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
 
+.link-container>h1 {
+    left: 0;
+}
+
+.logout-container {
+    align-self: flex-end;
+    color: black; 
+    text-decoration: none;
+}

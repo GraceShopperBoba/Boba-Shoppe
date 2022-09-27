@@ -7,9 +7,9 @@ import { me } from "../store/auth";
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="navbar-container">
     <nav className="navbar">
-      Boba Shoppe
       {isLoggedIn ? (
         <div className="link-container">
+          <h1 className="shop-name">Boba Shoppe</h1>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">
             <img className="nav-icons" src="/images/homeIcon.png" />

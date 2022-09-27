@@ -8,32 +8,22 @@ const {
 
 module.exports = router;
 
-const usersOnly = (req, res, next) => {
-  if (!req.params.username) {
-    const err = new Error("Action not allowed while logged out");
-    err.status = 401;
-    return next(err);
-  } else {
+const requireToken = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const user = await User.findByToken(token);
+    req.user = user;
     next();
+  } catch (error) {
+    next(error);
   }
 };
 
 const adminsOnly = (req, res, next) => {
-  let { id, firstName, lastName, email, password, image, adminAccess } =
-    req.user.dataValues;
-
-  if (id && firstName && lastName && email && password && image) {
-    if (!adminAccess) {
-      const err = new Error("This action requires Admin access!");
-      err.status = 401;
-      return next(err);
-    } else {
-      next();
-    }
+  if (!req.user.adminAccess) {
+    return res.status(403).send("This action requires ADMIN access");
   } else {
-    const err = new Error("This action requires Admin access!");
-    err.status = 401;
-    return next(err);
+    next();
   }
 };
 
@@ -63,9 +53,9 @@ router.get("/", async (req, res, next) => {
 // });
 
 //get specific user and their products
-router.get("/:username", usersOnly, async (req, res, next) => {
+router.get("/:username", requireToken, async (req, res, next) => {
   try {
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: {
         username: req.params.username,
       },
@@ -77,18 +67,8 @@ router.get("/:username", usersOnly, async (req, res, next) => {
   }
 });
 
-//delete a specific user
-router.delete("/:userId", usersOnly, adminsOnly, async (req, res, next) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
 //edit a user - will be for user to edit their own log in
-router.put("/:username", async (req, res, next) => {
+router.put("/:username", requireToken, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: { username: req.params.username },
@@ -100,7 +80,7 @@ router.put("/:username", async (req, res, next) => {
 });
 
 //delete a specific user
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", adminsOnly, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     await user.destroy();
