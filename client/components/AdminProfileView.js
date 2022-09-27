@@ -58,7 +58,7 @@ export class AdminProfileView extends React.Component {
               return (
                 <div>
                   <h1>{product.name}</h1>
-                  <p> {product.isfullfilled}</p>
+                  <p> {product.quantity}</p>
                 </div>
               );
             })}
