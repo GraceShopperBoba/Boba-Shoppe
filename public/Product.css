@@ -81,3 +81,26 @@
     background-color: #d38fb4;
     transition: all .4s ease-in-out;
 }
+
+.newproduct{
+    float: left
+}
+
+.newproduct button{
+    background-color: E0B1CB;
+    padding: 10px;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 1s;
+    border-radius: 10px;
+}
+
+.newproduct button:hover{
+    background-color: #d38fb4;
+    transition: all .4s ease-in-out;
+}

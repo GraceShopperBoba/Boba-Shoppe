@@ -17,9 +17,9 @@ export class EditUser extends React.Component {
 
   // componentDidMount() {
   //   console.log("EDIT STUDENT: ", this.props);
-  //   //const username = this.props.match.params.username;
-  //   // const username = this.props.match.params.username;
-  //   // this.props.setUser(username);
+  //   const username = this.props.match.params.username;
+  //   const username = this.props.match.params.username;
+  //   this.props.setUser(username);
   // }
 
   handleChange(event) {

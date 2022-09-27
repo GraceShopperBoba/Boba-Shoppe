@@ -36,13 +36,15 @@ export class CreateProduct extends React.Component {
     const { handleChange, handleSubmit } = this;
 
     return (
-      <div className="card">
-        <div className="productdisplaycard">
+      <div className="itemContainer">
+        <div id="singleItem">
           <h2 className="title">New Product</h2>
           <form className="" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name"> Name: </label>
               <input
+                label="Name"
+                placeholder="Product Name"
                 name="name"
                 onChange={handleChange}
                 value={name}
@@ -94,7 +96,7 @@ export class CreateProduct extends React.Component {
                 required
               />
             </div>
-            <div>
+            <div className="newproduct">
               <button type="submit">Create</button>
             </div>
           </form>

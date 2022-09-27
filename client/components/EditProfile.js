@@ -15,9 +15,10 @@ export class EditProfile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.props.setUser(this.props.user.username);
-  }
+  // componentDidMount() {
+  //   console.log("PROPS: ", this.props.match.params.username);
+  //   this.props.setUser(this.props.user.username);
+  // }
 
   handleChange(event) {
     this.setState({
@@ -31,13 +32,14 @@ export class EditProfile extends React.Component {
     window.location.reload(false);
   }
 
-  // componentWillUnmount() {
-  //   this.props.clearUser();
-  // }
+  componentWillUnmount() {
+    this.props.clearUser();
+  }
 
   render() {
     const { firstName, lastName, email, username } = this.state;
     const { handleChange, handleSubmit } = this;
+    console.log("STATE: ", this.state);
     return (
       <div>
         <form className="edit-form" onSubmit={handleSubmit}>
@@ -96,7 +98,7 @@ const mapDispatch = (dispatch, { history }) => {
   return {
     editUser: (user) => dispatch(fetchEditedUser(user, history)),
     setUser: (username) => dispatch(fetchUser(username)),
-    //clearUser: () => dispatch(fetchClearedUser({})),
+    clearUser: () => dispatch(fetchClearedUser({})),
   };
 };
 

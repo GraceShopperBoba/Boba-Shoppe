@@ -53,33 +53,33 @@ export class AllProducts extends React.Component {
     const isAdmin = this.props.isAdmin;
     const user = this.props.user;
     return isAdmin ? (
-      <div id="allItems">
+      <div>
         <Category />
-        <div className="itemContainer">
-          {products.length
-            ? products.map((product) => {
-                return (
-                  <div id="singleItem" key={product.id}>
-                    <div className="productDisplayCard">
-                      <Link to={`/products/${product.id}`}>
-                        <img src={product.imageUrl} alt="image" />
-                        <h2>{product.name}</h2>
-                        <h3>${product.price}</h3>
-                        <button>Edit</button>
-                      </Link>
-                      <button
-                        onClick={() => {
-                          this.confirmation(product.id);
-                        }}
-                        type="submit"
-                      >
-                        Delete
-                      </button>
+        <div id="allItems">
+          <div className="itemContainer">
+            {products.length
+              ? products.map((product) => {
+                  return (
+                    <div id="singleItem" key={product.id}>
+                      <div className="productDisplayCard">
+                        <Link to={`/products/${product.id}`}>
+                          <img src={product.imageUrl} alt="image" />
+                          <h2>{product.name}</h2>
+                          <h3>${(product.price / 100).toFixed(2)}</h3>
+                          <button>Edit</button>
+                        </Link>
+                        <button
+                          onClick={() => this.confirmation(product.id)}
+                          type="submit"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            : null}
+                  );
+                })
+              : null}
+          </div>
           <CreateProduct />
         </div>
       </div>
@@ -96,7 +96,7 @@ export class AllProducts extends React.Component {
                         <Link to={`/product/${product.id}`}>
                           <img src={product.imageUrl} alt="image" />
                           <h2>{product.name}</h2>
-                          <h3>{product.price}</h3>
+                          <h3>${(product.price / 100).toFixed(2)}</h3>
                         </Link>
                         <div className="likeArea">
                           <button

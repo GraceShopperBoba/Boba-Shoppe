@@ -35,7 +35,7 @@ export class Profile extends React.Component {
         <div className="rightDiv">
           <div>
             <h1>Account Information</h1>
-            <EditProfile />
+            <EditProfile match={this.props.match} user={user} />
           </div>
 
           <div>

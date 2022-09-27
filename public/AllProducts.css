@@ -4,7 +4,8 @@
   display: flex;
   flex-wrap: wrap;
   padding-left: 0px;
-
+  justify-content: center;
+  font-family: "Comic Sans MS", "Comic Sans";
 }
 
 #singleItem{ 
@@ -26,6 +27,10 @@
     border-radius: 50%;
   }
 
+  .productDisplayCard {
+    text-align: center;
+  }
+
   .productDisplayCard button {
     background-color: #E0B1CB;
     border-radius: 10px;
@@ -45,11 +50,13 @@
     background-color: #d38fb4;
     transition: all .4s ease-in-out;
   }
+
   .likeArea{
     width:300px;
     display: flex;
 
   }
+
   .likeArea .add {
     width: 75%;
     height: 10%;
