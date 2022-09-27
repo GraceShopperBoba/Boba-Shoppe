@@ -14,9 +14,9 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
+  const [user1, user2, user3, user4] = await Promise.all([
     User.create({
-      id: 1,
+      // id: 1,
       firstName: "Abby",
       lastName: "Lee",
       email: "a@l.com",
@@ -27,7 +27,7 @@ async function seed() {
       currentOrder: 1,
     }),
     User.create({
-      id: 2,
+      // id: 2,
       firstName: "Bea",
       lastName: "Bosch",
       email: "b@b.com",
@@ -38,7 +38,7 @@ async function seed() {
       currentOrder: 2,
     }),
     User.create({
-      id: 3,
+      // id: 3,
       firstName: "Zach",
       lastName: "Pram",
       email: "z@p.com",
@@ -49,7 +49,7 @@ async function seed() {
       currentOrder: 3,
     }),
     User.create({
-      id: 4,
+      // id: 4,
       firstName: "Eric",
       lastName: "Fan",
       email: "e@f.com",
@@ -178,22 +178,22 @@ async function seed() {
     Order.create({
       id: 1,
       isFulfilled: false,
-      userId: 1,
+      userId: user1.id,
     }),
     Order.create({
       id: 2,
       isFulfilled: false,
-      userId: 2,
+      userId: user2.id,
     }),
     Order.create({
       id: 3,
       isFulfilled: false,
-      userId: 3,
+      userId: user3.id,
     }),
     Order.create({
       id: 4,
       isFulfilled: true,
-      userId: 4,
+      userId: user4.id,
     }),
   ]);
 
@@ -212,9 +212,9 @@ async function seed() {
   // await orders[2].addProduct(products[1], { through: "Order_Products" });
   // await orders[2].addProduct(products[3], { through: "Order_Products" });
 
-  console.log(
-    `seeded ${users.length} users && ${products.length} products && ${orders.length} orders`
-  );
+  // console.log(
+  //   `seeded ${users.length} users && ${products.length} products && ${orders.length} orders`
+  // );
   console.log(`seeded successfully`);
   // return {
   //   users: {
