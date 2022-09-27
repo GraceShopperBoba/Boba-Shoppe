@@ -29,10 +29,23 @@ export const me = () => async (dispatch) => {
 };
 
 export const authenticate =
-  (username, password, method) => async (dispatch) => {
+  (username, password, formName, email, firstName, lastName) =>
+  async (dispatch) => {
     try {
-      const res = await axios.post(`/auth/${method}`, { username, password });
+      let res;
+      if (formName === "login") {
+        res = await axios.post("/auth/login", { username, password });
+      } else {
+        res = await axios.post("/auth/signup", {
+          username,
+          password,
+          email,
+          firstName,
+          lastName,
+        });
+      }
       window.localStorage.setItem(TOKEN, res.data.token);
+      history.push("/home");
       dispatch(me());
     } catch (authError) {
       return dispatch(setAuth({ error: authError }));

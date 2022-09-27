@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
  * COMPONENT
  */
 const LogIn = (props) => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { name, displayName, handleLoginSubmit, error } = props;
 
   return (
     <div className="authPage">
-      <form className="form-body" onSubmit={handleSubmit} name={name}>
+      <form className="form-body" onSubmit={handleLoginSubmit} name={name}>
         <h1 className="form-h1">LOG IN</h1>
         <div>
           <input
@@ -47,11 +47,11 @@ const LogIn = (props) => {
 };
 
 const SignUp = (props) => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { name, displayName, handleSignupSubmit, error } = props;
 
   return (
     <div className="authPage">
-      <form className="form-body" onSubmit={handleSubmit} name={name}>
+      <form className="form-body" onSubmit={handleSignupSubmit} name={name}>
         <h1 className="form-h1">SIGN UP</h1>
         <div>
           <input
@@ -129,12 +129,24 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt) {
+    handleLoginSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
       const username = evt.target.username.value;
       const password = evt.target.password.value;
       dispatch(authenticate(username, password, formName));
+    },
+    handleSignupSubmit(evt) {
+      evt.preventDefault();
+      const formName = evt.target.name;
+      const username = evt.target.username.value;
+      const password = evt.target.password.value;
+      const email = evt.target.email.value;
+      const firstName = evt.target.firstname.value;
+      const lastName = evt.target.lastname.value;
+      dispatch(
+        authenticate(username, password, formName, email, firstName, lastName)
+      );
     },
   };
 };
