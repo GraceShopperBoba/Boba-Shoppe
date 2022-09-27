@@ -70,7 +70,7 @@ router.get("/:username", async (req, res, next) => {
 //edit a user - will be for user to edit their own log in
 router.put("/:username", async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    const user = await User.findAll({
       where: { username: req.params.username },
     });
     res.send(await user.update(req.body));
