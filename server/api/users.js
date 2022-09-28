@@ -71,7 +71,10 @@ router.get("/:username", async (req, res, next) => {
 router.put("/:username", async (req, res, next) => {
   try {
     const user = await User.findAll({
-      where: { username: req.params.username },
+      where: {
+        username: req.params.username,
+      },
+      include: [Order],
     });
     res.send(await user.update(req.body));
   } catch (error) {
