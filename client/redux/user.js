@@ -23,7 +23,12 @@ const editUser = (user) => {
 export const fetchUser = (username) => {
   return async (dispatch) => {
     try {
-      const { data: user } = await axios.get(`/api/users/${username}`);
+      // const token = window.localStorage.getItem(TOKEN);
+      const { data: user } = await axios.get(`/api/users/${username}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(setUser(user));
     } catch (error) {
       return error;
