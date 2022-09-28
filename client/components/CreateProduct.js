@@ -44,7 +44,6 @@ export class CreateProduct extends React.Component {
               <label htmlFor="name"> Name: </label>
               <input
                 label="Name"
-                placeholder="Product Name"
                 name="name"
                 onChange={handleChange}
                 value={name}
@@ -97,7 +96,9 @@ export class CreateProduct extends React.Component {
               />
             </div>
             <div className="newproduct">
-              <button type="submit">Create</button>
+              <button background-color="#E0B1CB" type="submit">
+                Create
+              </button>
             </div>
           </form>
         </div>
