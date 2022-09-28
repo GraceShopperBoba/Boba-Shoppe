@@ -1,131 +1,84 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchOrdersByUser } from "../redux/orders";
-import {
-  deleteOrderProductThunk,
-  getOrderProductThunk,
-  updateOrderProductThunk,
-} from "../redux/orderProducts";
+import { deleteOrderProductThunk } from "../redux/orderProducts";
 import { Link } from "react-router-dom";
 
-export class Cart extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export function Cart(props) {
+  const [productsInCart, setProductsInCart] = useState("");
 
-  componentDidMount() {
-    this.props.getOrders(this.props.user.id);
-  }
+  useEffect(() => {
+    props.getOrders(props.user.id);
+  }, []);
 
-  render() {
-    let { orders } = this.props || [];
-    let products = orders?.products || [];
-    let { user } = this.props;
-    let overallTotal = 0;
-    products.map((product) => {
-      overallTotal += product.order_products.quantity * product.price;
-    });
+  let { orders } = props || [];
+  let products = orders?.products || [];
+  let { user } = props;
 
-    return (
-      <div className="cart">
-        <h1>{user.firstName}'s Shopping Bag</h1>
-        <hr />
-        <div className="cartInfo">
-          <div className="productsInCart">
-            {products
-              ? products.map((product) => {
-                  return (
-                    <div key={product.id}>
-                      <div className="product">
-                        <img src={product.imageUrl} alt="image" />
-                        <div className="productInfo">
-                          <h2> {product.name}</h2>
-                        </div>
-                        <div className="price">
-                          <h3>
-                            Item Price: ${(product.price / 100).toFixed(2)}
-                          </h3>
-                        </div>
-                        <div className="quantity">
-                          <button
-                            onClick={() => {
-                              let quantity =
-                                (product.order_products.quantity -= 1);
-                              let orderId = orders.id;
-                              let productId = product.id;
-                              this.props.updateOrdersProduct({
-                                quantity,
-                                orderId,
-                                productId,
-                              });
-                              window.location.reload(false);
-                            }}
-                          >
-                            -
-                          </button>
-                          <h3>Quantity: {product.order_products.quantity}</h3>
-
-                          <button
-                            onClick={() => {
-                              let quantity =
-                                (product.order_products.quantity += 1);
-                              let orderId = orders.id;
-                              let productId = product.id;
-                              this.props.updateOrdersProduct({
-                                quantity,
-                                orderId,
-                                productId,
-                              });
-                              window.location.reload(true);
-                            }}
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="price">
-                          <h3>
-                            Total Price: $
-                            {(
-                              (product.price *
-                                product.order_products.quantity) /
-                              100
-                            ).toFixed(2)}
-                          </h3>
-                          <h5
-                            className="remove"
-                            onClick={() => {
-                              let orderId = orders.id;
-                              let productId = product.id;
-                              this.props.deleteOrderProduct({
-                                orderId,
-                                productId,
-                              });
-                              window.location.reload(false);
-                            }}
-                          >
-                            Remove
-                          </h5>
-                        </div>
+  return (
+    <div className="cart">
+      <h1>{user.firstName}'s Shopping Bag</h1>
+      <hr />
+      <div className="cartInfo">
+        <div className="productsInCart">
+          {products
+            ? products.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <div className="product">
+                      <img src={product.imageUrl} alt="image" />
+                      <div className="productInfo">
+                        <h2> {product.name}</h2>
                       </div>
-                      <hr />
+                      <div className="price">
+                        <h3>Item Price: {product.price}</h3>
+                      </div>
+                      <select name="quantity" className="quantSelector">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                      </select>
+                      <div className="price">
+                        <h3>Total Price: {product.price}</h3>
+                        <h5
+                          className="remove"
+                          onClick={(e) => {
+                            setProductsInCart(e.target.value);
+                            let thunkInfo = [];
+                            thunkInfo.push(orders.id);
+                            thunkInfo.push(product.id);
+                            this.props.deleteOrderProduct(thunkInfo);
+                            window.location.reload(false);
+                          }}
+                        >
+                          Remove
+                        </h5>
+                      </div>
                     </div>
-                  );
-                })
-              : null}
-          </div>
-          <div className="orderSummary">
-            <h2>Order Summmary</h2>
-            <h3>TOTAL: ${(overallTotal / 100).toFixed(2)} </h3>
-            {("in total", console.log(this))}
-            <Link to="/checkout">
-              <button className="checkout">Proceed To Checkout</button>
-            </Link>
-          </div>
+                    <hr />
+                  </div>
+                );
+              })
+            : null}
         </div>
-        <div />
+        <div className="orderSummary">
+          <h2>Order Summmary</h2>
+          <h3>TOTAL</h3>
+          <Link to="/checkout">
+            <button className="checkout">Proceed To Checkout</button>
+          </Link>
+        </div>
       </div>
-    );
-  }
+      <div />
+    </div>
+  );
 }
 
 const mapState = (state) => {
